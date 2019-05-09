@@ -1,0 +1,184 @@
+\hypertarget{main_8c}{}\section{C\+:/\+Users/sglas/embedded\+Software/stephen\+Game/main.c File Reference}
+\label{main_8c}\index{C:/Users/sglas/embeddedSoftware/stephenGame/main.c@{C:/Users/sglas/embeddedSoftware/stephenGame/main.c}}
+
+
+Main file for asteroids game which initializes G\+P\+IO and modules.  
+
+
+{\ttfamily \#include $<$msp430.\+h$>$}\newline
+{\ttfamily \#include $<$math.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}library.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}project\+\_\+settings.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}stephen\+\_\+game.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}timing.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}subsystem.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}task.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}uart.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}hal\+\_\+general.\+h\char`\"{}}\newline
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{main_8c_ab6b53d6f84e5f6ad10d6d94df9b7e4b3}{G\+P\+I\+O\+\_\+\+L\+E\+D1}}~B\+I\+T0
+\item 
+\#define \mbox{\hyperlink{main_8c_aa1ba41c4c7f6691333f191eadc136adc}{G\+P\+I\+O\+\_\+\+L\+E\+D1\+\_\+\+O\+UT}}~P1\+O\+UT
+\item 
+\#define \mbox{\hyperlink{main_8c_a25fd072ae272cea5f42897a7180b4f32}{G\+P\+I\+O\+\_\+\+L\+E\+D1\+\_\+\+D\+IR}}~P1\+D\+IR
+\item 
+\#define \mbox{\hyperlink{main_8c_a09f1014df1694b89be1e1bd46cd499b1}{G\+P\+I\+O\+\_\+\+L\+E\+D2}}~B\+I\+T7
+\item 
+\#define \mbox{\hyperlink{main_8c_ac16b1aacf42ef5021cca577f7051758f}{G\+P\+I\+O\+\_\+\+L\+E\+D2\+\_\+\+O\+UT}}~P4\+O\+UT
+\item 
+\#define \mbox{\hyperlink{main_8c_a14c28053b3d8964085949d7cedf23dbb}{G\+P\+I\+O\+\_\+\+L\+E\+D2\+\_\+\+D\+IR}}~P4\+D\+IR
+\item 
+\#define \mbox{\hyperlink{main_8c_a9f4070ab2aa025206d2192c01cd41d85}{T\+A\+S\+K\+\_\+\+V\+E\+R\+S\+I\+ON}}~(version\+\_\+t)0x01010014u
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{main_8c_afe7a49ab9879bd7044b35eb779f30712}{Init\+G\+P\+IO}} (void)
+\item 
+void \mbox{\hyperlink{main_8c_ad73ee35821c38978d277d42015a9d01a}{Blink\+L\+ED}} (uint8\+\_\+t type)
+\item 
+void \mbox{\hyperlink{main_8c_a64b878d501fb34301b9fd91173299318}{Set\+Clk24\+M\+Hz}} (void)
+\item 
+void \mbox{\hyperlink{main_8c_a8577ab9a35e953d16cf2554c3252c49c}{Set\+Vcore\+Up}} (unsigned int level)
+\item 
+int \mbox{\hyperlink{main_8c_a840291bc02cba5474a4cb46a9b9566fe}{main}} (void)
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Main file for asteroids game which initializes G\+P\+IO and modules. 
+
+\begin{DoxyAuthor}{Author}
+Stephen Glass 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+May 5 2019 
+\end{DoxyDate}
+
+
+\subsection{Macro Definition Documentation}
+\mbox{\Hypertarget{main_8c_ab6b53d6f84e5f6ad10d6d94df9b7e4b3}\label{main_8c_ab6b53d6f84e5f6ad10d6d94df9b7e4b3}} 
+\index{main.c@{main.c}!GPIO\_LED1@{GPIO\_LED1}}
+\index{GPIO\_LED1@{GPIO\_LED1}!main.c@{main.c}}
+\subsubsection{\texorpdfstring{GPIO\_LED1}{GPIO\_LED1}}
+{\footnotesize\ttfamily \#define G\+P\+I\+O\+\_\+\+L\+E\+D1~B\+I\+T0}
+
+
+
+Definition at line 24 of file main.\+c.
+
+\mbox{\Hypertarget{main_8c_a25fd072ae272cea5f42897a7180b4f32}\label{main_8c_a25fd072ae272cea5f42897a7180b4f32}} 
+\index{main.c@{main.c}!GPIO\_LED1\_DIR@{GPIO\_LED1\_DIR}}
+\index{GPIO\_LED1\_DIR@{GPIO\_LED1\_DIR}!main.c@{main.c}}
+\subsubsection{\texorpdfstring{GPIO\_LED1\_DIR}{GPIO\_LED1\_DIR}}
+{\footnotesize\ttfamily \#define G\+P\+I\+O\+\_\+\+L\+E\+D1\+\_\+\+D\+IR~P1\+D\+IR}
+
+
+
+Definition at line 26 of file main.\+c.
+
+\mbox{\Hypertarget{main_8c_aa1ba41c4c7f6691333f191eadc136adc}\label{main_8c_aa1ba41c4c7f6691333f191eadc136adc}} 
+\index{main.c@{main.c}!GPIO\_LED1\_OUT@{GPIO\_LED1\_OUT}}
+\index{GPIO\_LED1\_OUT@{GPIO\_LED1\_OUT}!main.c@{main.c}}
+\subsubsection{\texorpdfstring{GPIO\_LED1\_OUT}{GPIO\_LED1\_OUT}}
+{\footnotesize\ttfamily \#define G\+P\+I\+O\+\_\+\+L\+E\+D1\+\_\+\+O\+UT~P1\+O\+UT}
+
+
+
+Definition at line 25 of file main.\+c.
+
+\mbox{\Hypertarget{main_8c_a09f1014df1694b89be1e1bd46cd499b1}\label{main_8c_a09f1014df1694b89be1e1bd46cd499b1}} 
+\index{main.c@{main.c}!GPIO\_LED2@{GPIO\_LED2}}
+\index{GPIO\_LED2@{GPIO\_LED2}!main.c@{main.c}}
+\subsubsection{\texorpdfstring{GPIO\_LED2}{GPIO\_LED2}}
+{\footnotesize\ttfamily \#define G\+P\+I\+O\+\_\+\+L\+E\+D2~B\+I\+T7}
+
+
+
+Definition at line 28 of file main.\+c.
+
+\mbox{\Hypertarget{main_8c_a14c28053b3d8964085949d7cedf23dbb}\label{main_8c_a14c28053b3d8964085949d7cedf23dbb}} 
+\index{main.c@{main.c}!GPIO\_LED2\_DIR@{GPIO\_LED2\_DIR}}
+\index{GPIO\_LED2\_DIR@{GPIO\_LED2\_DIR}!main.c@{main.c}}
+\subsubsection{\texorpdfstring{GPIO\_LED2\_DIR}{GPIO\_LED2\_DIR}}
+{\footnotesize\ttfamily \#define G\+P\+I\+O\+\_\+\+L\+E\+D2\+\_\+\+D\+IR~P4\+D\+IR}
+
+
+
+Definition at line 30 of file main.\+c.
+
+\mbox{\Hypertarget{main_8c_ac16b1aacf42ef5021cca577f7051758f}\label{main_8c_ac16b1aacf42ef5021cca577f7051758f}} 
+\index{main.c@{main.c}!GPIO\_LED2\_OUT@{GPIO\_LED2\_OUT}}
+\index{GPIO\_LED2\_OUT@{GPIO\_LED2\_OUT}!main.c@{main.c}}
+\subsubsection{\texorpdfstring{GPIO\_LED2\_OUT}{GPIO\_LED2\_OUT}}
+{\footnotesize\ttfamily \#define G\+P\+I\+O\+\_\+\+L\+E\+D2\+\_\+\+O\+UT~P4\+O\+UT}
+
+
+
+Definition at line 29 of file main.\+c.
+
+\mbox{\Hypertarget{main_8c_a9f4070ab2aa025206d2192c01cd41d85}\label{main_8c_a9f4070ab2aa025206d2192c01cd41d85}} 
+\index{main.c@{main.c}!TASK\_VERSION@{TASK\_VERSION}}
+\index{TASK\_VERSION@{TASK\_VERSION}!main.c@{main.c}}
+\subsubsection{\texorpdfstring{TASK\_VERSION}{TASK\_VERSION}}
+{\footnotesize\ttfamily \#define T\+A\+S\+K\+\_\+\+V\+E\+R\+S\+I\+ON~(version\+\_\+t)0x01010014u}
+
+
+
+Definition at line 32 of file main.\+c.
+
+
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{main_8c_ad73ee35821c38978d277d42015a9d01a}\label{main_8c_ad73ee35821c38978d277d42015a9d01a}} 
+\index{main.c@{main.c}!BlinkLED@{BlinkLED}}
+\index{BlinkLED@{BlinkLED}!main.c@{main.c}}
+\subsubsection{\texorpdfstring{BlinkLED()}{BlinkLED()}}
+{\footnotesize\ttfamily void Blink\+L\+ED (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{type }\end{DoxyParamCaption})}
+
+
+
+Definition at line 50 of file main.\+c.
+
+\mbox{\Hypertarget{main_8c_afe7a49ab9879bd7044b35eb779f30712}\label{main_8c_afe7a49ab9879bd7044b35eb779f30712}} 
+\index{main.c@{main.c}!InitGPIO@{InitGPIO}}
+\index{InitGPIO@{InitGPIO}!main.c@{main.c}}
+\subsubsection{\texorpdfstring{InitGPIO()}{InitGPIO()}}
+{\footnotesize\ttfamily void Init\+G\+P\+IO (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 41 of file main.\+c.
+
+\mbox{\Hypertarget{main_8c_a840291bc02cba5474a4cb46a9b9566fe}\label{main_8c_a840291bc02cba5474a4cb46a9b9566fe}} 
+\index{main.c@{main.c}!main@{main}}
+\index{main@{main}!main.c@{main.c}}
+\subsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 65 of file main.\+c.
+
+\mbox{\Hypertarget{main_8c_a64b878d501fb34301b9fd91173299318}\label{main_8c_a64b878d501fb34301b9fd91173299318}} 
+\index{main.c@{main.c}!SetClk24MHz@{SetClk24MHz}}
+\index{SetClk24MHz@{SetClk24MHz}!main.c@{main.c}}
+\subsubsection{\texorpdfstring{SetClk24MHz()}{SetClk24MHz()}}
+{\footnotesize\ttfamily void Set\+Clk24\+M\+Hz (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 100 of file main.\+c.
+
+\mbox{\Hypertarget{main_8c_a8577ab9a35e953d16cf2554c3252c49c}\label{main_8c_a8577ab9a35e953d16cf2554c3252c49c}} 
+\index{main.c@{main.c}!SetVcoreUp@{SetVcoreUp}}
+\index{SetVcoreUp@{SetVcoreUp}!main.c@{main.c}}
+\subsubsection{\texorpdfstring{SetVcoreUp()}{SetVcoreUp()}}
+{\footnotesize\ttfamily void Set\+Vcore\+Up (\begin{DoxyParamCaption}\item[{unsigned int}]{level }\end{DoxyParamCaption})}
+
+
+
+Definition at line 148 of file main.\+c.
+

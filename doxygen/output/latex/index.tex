@@ -1,0 +1,25 @@
+
+
+ Terminal-\/based Asteroids game for embedded platforms. This project recreates the classic Asteroids game in a terminal application (e.\+g Pu\+T\+TY, Tera\+Term) over U\+A\+RT protocol. This uses \href{https://github.com/muhlbaier/embedded-software}{\texttt{ embedded-\/software library}} for U\+A\+RT abstraction, terminal functions, and task management systems. Therefore, this project can be run on any embedded platform supported for the embedded-\/software library. The project was developed and tested using a M\+S\+P430\+F5529.\hypertarget{index_usage}{}\section{Usage}\label{index_usage}
+The U\+A\+RT communication is configured to utilize the back-\/channel port at 460800 baud. A U\+SB to T\+T\+L/\+F\+T\+DI converter is recommended. On M\+S\+P430 processors it is highly recommended to N\+OT use the built-\/in Application U\+A\+RT due to slow speeds.\hypertarget{index_putty_config}{}\section{Pu\+T\+T\+Y Configuration}\label{index_putty_config}
+Any terminal with Serial communication support is suitable by this R\+E\+A\+D\+ME will discuss configuration using Pu\+T\+TY.
+\begin{DoxyItemize}
+\item Set baud rate to 460800
+\item In \char`\"{}\+Window\char`\"{} menu set columns and rows to appropiate size (game configured for 60 x 25 by default)
+\item In \char`\"{}\+Window\char`\"{} -\/$>$ \char`\"{}\+Translation\char`\"{} menu set \char`\"{}\+Remote character set\char`\"{} to \char`\"{}\+C\+P866\char`\"{}
+\end{DoxyItemize}\hypertarget{index_running_game}{}\section{Running the game}\label{index_running_game}
+With the terminal open and the code running, type \char`\"{}\$game fly1 play\char`\"{} to start playing the game 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\$game fly1 play}
+\end{DoxyCode}
+\hypertarget{index_prereq}{}\section{Dependencies}\label{index_prereq}
+This project uses \href{https://github.com/muhlbaier/embedded-software}{\texttt{ embedded-\/software library}}. Please download and refer to library documentation to configure the project for your embedded platform. \begin{DoxySeeAlso}{See also}
+\href{https://github.com/muhlbaier/embedded-software}{\texttt{ https\+://github.\+com/muhlbaier/embedded-\/software}}
+\end{DoxySeeAlso}
+\hypertarget{index_author}{}\section{Author}\label{index_author}
+
+\begin{DoxyItemize}
+\item Stephen Glass -\/ \href{https://stephen.glass}{\texttt{ https\+://stephen.\+glass}}
+\end{DoxyItemize}\hypertarget{index_license}{}\section{License}\label{index_license}
+This project is licensed under the M\+IT License -\/ see the L\+I\+C\+E\+N\+SE.md file for details.\hypertarget{index_screenshot}{}\section{Screenshot}\label{index_screenshot}
+ 

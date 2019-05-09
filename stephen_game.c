@@ -1,8 +1,45 @@
-/*
- * stephen_game.c
+/**
+ * @mainpage Asteroids Game Documentation
+ * <hr/>
+ * Terminal-based Asteroids game for embedded platforms. This project recreates the classic Asteroids game in a terminal application
+ * (e.g PuTTY, TeraTerm) over UART protocol. This uses [embedded-software library](https://github.com/muhlbaier/embedded-software)
+ * for UART abstraction, terminal functions, and task management systems. Therefore, this project can be run on any
+ * embedded platform supported for the embedded-software library. The project was developed and tested using a MSP430F5529.
  *
- *  Created on: Mar 16, 2019
- *      Author: sglas
+ * @section usage Usage
+ * The UART communication is configured to utilize the back-channel port at 460800 baud. A USB to TTL/FTDI converter is recommended. On MSP430 processors
+ * it is highly recommended to NOT use the built-in Application UART due to slow speeds.
+ *
+ * @section putty_config PuTTY Configuration
+ * Any terminal with Serial communication support is suitable by this README will discuss configuration using PuTTY.
+ * - Set baud rate to 460800
+ * - In "Window" menu set columns and rows to appropiate size (game configured for 60 x 25 by default)
+ * - In "Window" -> "Translation" menu set "Remote character set" to "CP866"
+ *
+ * @section running_game Running the game
+ * With the terminal open and the code running, type "$game fly1 play" to start playing the game
+ * @code
+ * $game fly1 play
+ * @endcode
+ *
+ * @section prereq Dependencies
+ * This project uses [embedded-software library](https://github.com/muhlbaier/embedded-software).
+ * Please download and refer to library documentation to configure the project for your embedded platform.
+ * @see https://github.com/muhlbaier/embedded-software
+ *
+ * @section author Author
+ * - Stephen Glass - [https://stephen.glass](https://stephen.glass)
+ *
+ * @section license License
+ * This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
+ *
+ * @section screenshot Screenshot
+ * \image html screenshot.jpg
+ *
+ * @file stephen_game.c
+ * @author Stephen Glass
+ * @date May 5 2019
+ * @brief Core game code for asteroids game on MSP430F5529 embedded platform
  */
 
 #include "project_settings.h"
@@ -15,19 +52,19 @@
 #include "terminal.h"
 #include "random_int.h"
 
-#define MAP_WIDTH                   60
-#define MAP_HEIGHT                  18
+#define MAP_WIDTH                   60              // Width of the playable map
+#define MAP_HEIGHT                  18              // Height of the playable map
 
-#define MAX_ASTEROIDS               250
-#define MAX_ASTEROIDS_PER_COLUMN    MAP_HEIGHT-2
-#define MAX_COLUMNS                 MAP_WIDTH-2
+#define MAX_ASTEROIDS               250             // Maximum amount of asteroids that can appear on terminal
+#define MAX_ASTEROIDS_PER_COLUMN    MAP_HEIGHT-2    // Normalized play area
+#define MAX_COLUMNS                 MAP_WIDTH-2     // Normalized play area
 
-#define FIRE_SPEED                  100
-#define RECHARGE_RATE               750
-#define MAX_SHOTS                   5
+#define FIRE_SPEED                  100             // Speed (ms) at which player can fire a shot
+#define RECHARGE_RATE               750             // Speed (ms) at which weapon recharges
+#define MAX_SHOTS                   5               // Max number of shots that can appear on terminal simultanously
 
-/* (1/asteroidSpawnChance) [e.g increasing spawn chance decreases spawn rate] */
-#define STARTING_DIFFICULTY         24 
+// (1/asteroidSpawnChance) [e.g increasing spawn chance decreases spawn rate]
+#define STARTING_DIFFICULTY         24              // Default starting difficulty
 
 /// game structure
 struct stephen_game_t {
@@ -42,10 +79,10 @@ struct stephen_game_t {
 };
 static struct stephen_game_t game;
 
-/* Create 2D array size of the playable area to map asteroids */
+// Create 2D array size of the playable area to map asteroids
 static uint8_t asteroids[MAP_WIDTH-1][MAP_HEIGHT-1];
 
-/* Shots fired */
+// Shots fired
 static char_object_t shots[MAX_SHOTS];
 
 /* note the user doesn't need to access these functions directly so they are
@@ -86,6 +123,9 @@ void StephenGame_Init(void) {
     Game_RegisterCallback(game.id, Callback);
 }
 
+/** @brief Function to start play game
+ *  Play game
+*/
 void Play(void) {
     volatile uint8_t i, j;
 
@@ -94,14 +134,14 @@ void Play(void) {
     // draw a box around our map
     Game_DrawRect(0, 0, MAP_WIDTH, MAP_HEIGHT);
 
-    /* Initialize game variables */
+    // Initialize game variables
     for(i = 0; i < MAP_WIDTH-1; i++) {
         for(j = 0; j < MAP_HEIGHT-1; j++) {
             asteroids[i][j] = 0;
         }
     }
 
-    /* Set default position of space ship */
+    // Set default position of space ship
     game.x = 1;
     game.y = MAP_HEIGHT / 2;
     game.c = '>';
@@ -110,31 +150,35 @@ void Play(void) {
     game.health = 3;
     game.shotCooldown = 6;
 
-    /* Draw the space ship */
+    // Draw the space ship
     Game_SetColor(ForegroundCyan);
     Game_CharXY(game.c, game.x, game.y);
     Game_SetColor(ForegroundWhite);
     Game_RegisterPlayer1Receiver(Receiver);
 
-    /* Hide the cursor */
+    // Hide the cursor
     Game_HideCursor();
 
-    /* Set cursor below the game view and show score */
+    // Set cursor below the game view and show score
     UpdateScore();
 
-    /* Show starting health */
+    // Show starting health
     UpdateHealth();
 
-    /* Show starting shoot cooldown */
+    // Show starting shoot cooldown
     UpdateShotCooldown();
 
-    /* Show starting difficulty */
+    // Show starting difficulty
     UpdateDifficulty();
 
+    // Task schedule generating and shifting of asteroids
     Task_Schedule(GenerateAndShift, 0, 500, 1000);
+    // Increase the score by static amount just for player staying alive
     Task_Schedule(IncreaseScore, 0, 2500, 2500);
 }
 
+/** @brief Function to end game
+ */
 void GameOver(void) {
     Task_Remove(GenerateAndShift, 0);
     Task_Remove(IncreaseScore, 0);
@@ -160,16 +204,23 @@ void GameOver(void) {
     Game_GameOver();
 }
 
+/** @brief Increase the score by one
+ */
 void IncreaseScore(void) {
     game.score += 1;
     Task_Queue(UpdateScore, 0);
 }
 
+/** @brief Generate a new row of asteroids and shift the columns to the left
+ */
 void GenerateAndShift(void) {
     GenerateAsteroidColumn();
     ShiftAsteroidColumns();
 }
 
+
+/** @brief Generate a new column of asteroids to display on the terminal window
+ */
 void GenerateAsteroidColumn(void) {
     uint8_t randomCheck, randomType;
     volatile uint8_t i;
@@ -193,6 +244,8 @@ void GenerateAsteroidColumn(void) {
     }
 }
 
+/** @brief Shift each column of asteroids on the terminal window to the left
+ */
 void ShiftAsteroidColumns(void) {
     volatile uint8_t column, i;
     for(column = 1; column < MAP_WIDTH-1; column++) {
@@ -239,6 +292,8 @@ void ShiftAsteroidColumns(void) {
     }
 }
 
+/** @brief Initiate shooting the weapon from the player
+ */
 void Shoot(void) {
     if(game.shotCooldown >= 3) { // at least 3 to shoot one
         char_object_t * shot = 0;
@@ -266,6 +321,10 @@ void Shoot(void) {
     }
 }
 
+/** @brief Move a shot particle to the right
+ *
+ * @param o pointer to the shot object
+ */
 void MoveRightShot(char_object_t * o) {
     if (o->x < MAP_WIDTH-2) { // if not at edge
         // clear location
@@ -296,6 +355,8 @@ void MoveRightShot(char_object_t * o) {
     }
 }
 
+/** @brief Decrease the cooldown timer for shooting again
+ */
 void DecreaseCooldown(void) {
     if(game.shotCooldown < 6) {
         game.shotCooldown++;
@@ -307,11 +368,15 @@ void DecreaseCooldown(void) {
     }
 }
 
+/** @brief Help function
+ */
 void Help(void) {
     Game_Printf("WASD to move the spaceship\r\nSPACEBAR to FIRE\r\n");
     Game_Printf("Weapon recharges over time. Difficulty increases with score.\r\n");
 }
 
+/** @brief Update the score text to the most recent value and adjust difficulty
+ */
 void UpdateScore(void) {
     /* Set cursor below the game view and show score */
     Game_CharXY('\r', 0, MAP_HEIGHT + 1);
@@ -319,48 +384,50 @@ void UpdateScore(void) {
 
     /* Conditional block below is simply just setting the difficulty
     based on whatever score the player achieves */
-    if(game.score == 35) {
+    if(game.score == 25) {
         asteroidSpawnProbability = STARTING_DIFFICULTY - 1;
         Task_Queue((task_t)UpdateDifficulty, 0);
     }
-    else if(game.score == 55) {
+    else if(game.score == 35) {
         asteroidSpawnProbability = STARTING_DIFFICULTY - 2;
         Task_Queue((task_t)UpdateDifficulty, 0);
     }
-    else if(game.score == 65) {
+    else if(game.score == 45) {
         asteroidSpawnProbability = STARTING_DIFFICULTY - 3;
         Task_Queue((task_t)UpdateDifficulty, 0);
     }
-    else if(game.score == 80) {
+    else if(game.score == 70) {
         asteroidSpawnProbability = STARTING_DIFFICULTY - 4;
         Task_Queue((task_t)UpdateDifficulty, 0);
     }
-    else if(game.score == 100) {
+    else if(game.score == 90) {
         asteroidSpawnProbability = STARTING_DIFFICULTY - 5;
         Task_Queue((task_t)UpdateDifficulty, 0);
     }
-    else if(game.score == 120) {
+    else if(game.score == 100) {
         asteroidSpawnProbability = STARTING_DIFFICULTY - 6;
         Task_Queue((task_t)UpdateDifficulty, 0);
     }
-    else if(game.score == 140) {
+    else if(game.score == 110) {
         asteroidSpawnProbability = STARTING_DIFFICULTY - 7;
         Task_Queue((task_t)UpdateDifficulty, 0);
     }
-    else if(game.score == 160) {
+    else if(game.score == 120) {
         asteroidSpawnProbability = STARTING_DIFFICULTY - 8;
         Task_Queue((task_t)UpdateDifficulty, 0);
     }
-    else if(game.score == 180) {
+    else if(game.score == 130) {
         asteroidSpawnProbability = STARTING_DIFFICULTY - 9;
         Task_Queue((task_t)UpdateDifficulty, 0);
     }
-    else if(game.score == 200) {
+    else if(game.score == 150) {
         asteroidSpawnProbability = STARTING_DIFFICULTY - 10;
         Task_Queue((task_t)UpdateDifficulty, 0);
     }
 }
 
+/** @brief Update the text to the difficulty
+ */
 void UpdateDifficulty(void) {
     /* Set cursor below the game view and show difficulty */
     uint8_t score = (STARTING_DIFFICULTY-asteroidSpawnProbability) + 1;
@@ -368,6 +435,8 @@ void UpdateDifficulty(void) {
     Game_Printf("Difficulty: %d", score);
 }
 
+/** @brief Update the text and color for player health
+ */
 void UpdateHealth(void) {
     Game_CharXY('\r', 0, MAP_HEIGHT + 2);
     Game_Printf("Health: ");
@@ -382,12 +451,16 @@ void UpdateHealth(void) {
     Game_SetColor(ForegroundWhite);
 }
 
+/** @brief Resets all colors to default
+ */
 void ResetScreenColor(void) {
     Game_SetColor(ForegroundCyan);
     Game_CharXY(game.c, game.x, game.y); // reset back to spaceship too
     Game_SetColor(ForegroundWhite);
 }
 
+/** @brief Updates the text and color for shot cooldown
+ */
 void UpdateShotCooldown(void) {
     Game_CharXY('\r', 0, MAP_HEIGHT + 3);
     Game_Printf("Weapon Charge: [");
@@ -432,6 +505,8 @@ void UpdateShotCooldown(void) {
     }
 }
 
+/** @brief Move the player to the right
+ */
 void MoveRight(void) {
     // make sure we can move right
     if (game.x < MAP_WIDTH - 3) {
@@ -456,6 +531,8 @@ void MoveRight(void) {
     }
 }
 
+/** @brief Move the player to the left
+ */
 void MoveLeft(void) {
     // make sure we can move right
     if (game.x > 1) {
@@ -480,6 +557,8 @@ void MoveLeft(void) {
     }
 }
 
+/** @brief Move the player down
+ */
 void MoveDown(void) {
     // make sure we can move up
     if (game.y < MAP_HEIGHT - 1) {
@@ -504,6 +583,8 @@ void MoveDown(void) {
     }
 }
 
+/** @brief Move the player up
+ */
 void MoveUp(void) {
     // make sure we can move right
     if (game.y > 1) {
@@ -528,6 +609,8 @@ void MoveUp(void) {
     }
 }
 
+/** @brief UART character receiver
+ */
 void Receiver(uint8_t c) {
     switch (c) {
         case 'a':

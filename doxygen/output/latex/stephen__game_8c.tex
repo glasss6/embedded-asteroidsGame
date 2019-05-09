@@ -1,0 +1,163 @@
+\hypertarget{stephen__game_8c}{}\section{C\+:/\+Users/sglas/embedded\+Software/stephen\+Game/stephen\+\_\+game.c File Reference}
+\label{stephen__game_8c}\index{C:/Users/sglas/embeddedSoftware/stephenGame/stephen\_game.c@{C:/Users/sglas/embeddedSoftware/stephenGame/stephen\_game.c}}
+
+
+Core game code for asteroids game on M\+S\+P430\+F5529 embedded platform.  
+
+
+{\ttfamily \#include \char`\"{}project\+\_\+settings.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}random\+\_\+int.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}stddef.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}strings.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}game.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}timing.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}task.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}terminal.\+h\char`\"{}}\newline
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structstephen__game__t}{stephen\+\_\+game\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em game structure \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{stephen__game_8c_aa037a6d6a4f04d51c7ec1c9ee9054e76}{M\+A\+P\+\_\+\+W\+I\+D\+TH}}~60
+\item 
+\#define \mbox{\hyperlink{stephen__game_8c_a529d5ebb449edf31d9835d13f4fb9f89}{M\+A\+P\+\_\+\+H\+E\+I\+G\+HT}}~18
+\item 
+\#define \mbox{\hyperlink{stephen__game_8c_add344ce0aa0b9e8437d848f5f7149789}{M\+A\+X\+\_\+\+A\+S\+T\+E\+R\+O\+I\+DS}}~250
+\item 
+\#define \mbox{\hyperlink{stephen__game_8c_a4873f264354797c1c04c34dff324c36b}{M\+A\+X\+\_\+\+A\+S\+T\+E\+R\+O\+I\+D\+S\+\_\+\+P\+E\+R\+\_\+\+C\+O\+L\+U\+MN}}~\mbox{\hyperlink{stephen__game_8c_a529d5ebb449edf31d9835d13f4fb9f89}{M\+A\+P\+\_\+\+H\+E\+I\+G\+HT}}-\/2
+\item 
+\#define \mbox{\hyperlink{stephen__game_8c_a2cc6f39fc4594f0e734b2588129fba03}{M\+A\+X\+\_\+\+C\+O\+L\+U\+M\+NS}}~\mbox{\hyperlink{stephen__game_8c_aa037a6d6a4f04d51c7ec1c9ee9054e76}{M\+A\+P\+\_\+\+W\+I\+D\+TH}}-\/2
+\item 
+\#define \mbox{\hyperlink{stephen__game_8c_a96258174015421062e4aa5638839434a}{F\+I\+R\+E\+\_\+\+S\+P\+E\+ED}}~100
+\item 
+\#define \mbox{\hyperlink{stephen__game_8c_a0635ebdd108cf6b14b994ff2ad064558}{R\+E\+C\+H\+A\+R\+G\+E\+\_\+\+R\+A\+TE}}~750
+\item 
+\#define \mbox{\hyperlink{stephen__game_8c_a81fabb4c9328f1dce788621d20c9c650}{M\+A\+X\+\_\+\+S\+H\+O\+TS}}~5
+\item 
+\#define \mbox{\hyperlink{stephen__game_8c_afc4d38e13c0a5f8430e74eac4cbded6e}{S\+T\+A\+R\+T\+I\+N\+G\+\_\+\+D\+I\+F\+F\+I\+C\+U\+L\+TY}}~24
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{stephen__game_8c_a2edb540b6a90674712e89ac914269338}{Stephen\+Game\+\_\+\+Init}} (void)
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Core game code for asteroids game on M\+S\+P430\+F5529 embedded platform. 
+
+\begin{DoxyAuthor}{Author}
+Stephen Glass 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+May 5 2019 
+\end{DoxyDate}
+
+
+\subsection{Macro Definition Documentation}
+\mbox{\Hypertarget{stephen__game_8c_a96258174015421062e4aa5638839434a}\label{stephen__game_8c_a96258174015421062e4aa5638839434a}} 
+\index{stephen\_game.c@{stephen\_game.c}!FIRE\_SPEED@{FIRE\_SPEED}}
+\index{FIRE\_SPEED@{FIRE\_SPEED}!stephen\_game.c@{stephen\_game.c}}
+\subsubsection{\texorpdfstring{FIRE\_SPEED}{FIRE\_SPEED}}
+{\footnotesize\ttfamily \#define F\+I\+R\+E\+\_\+\+S\+P\+E\+ED~100}
+
+
+
+Definition at line 62 of file stephen\+\_\+game.\+c.
+
+\mbox{\Hypertarget{stephen__game_8c_a529d5ebb449edf31d9835d13f4fb9f89}\label{stephen__game_8c_a529d5ebb449edf31d9835d13f4fb9f89}} 
+\index{stephen\_game.c@{stephen\_game.c}!MAP\_HEIGHT@{MAP\_HEIGHT}}
+\index{MAP\_HEIGHT@{MAP\_HEIGHT}!stephen\_game.c@{stephen\_game.c}}
+\subsubsection{\texorpdfstring{MAP\_HEIGHT}{MAP\_HEIGHT}}
+{\footnotesize\ttfamily \#define M\+A\+P\+\_\+\+H\+E\+I\+G\+HT~18}
+
+
+
+Definition at line 56 of file stephen\+\_\+game.\+c.
+
+\mbox{\Hypertarget{stephen__game_8c_aa037a6d6a4f04d51c7ec1c9ee9054e76}\label{stephen__game_8c_aa037a6d6a4f04d51c7ec1c9ee9054e76}} 
+\index{stephen\_game.c@{stephen\_game.c}!MAP\_WIDTH@{MAP\_WIDTH}}
+\index{MAP\_WIDTH@{MAP\_WIDTH}!stephen\_game.c@{stephen\_game.c}}
+\subsubsection{\texorpdfstring{MAP\_WIDTH}{MAP\_WIDTH}}
+{\footnotesize\ttfamily \#define M\+A\+P\+\_\+\+W\+I\+D\+TH~60}
+
+
+
+Definition at line 55 of file stephen\+\_\+game.\+c.
+
+\mbox{\Hypertarget{stephen__game_8c_add344ce0aa0b9e8437d848f5f7149789}\label{stephen__game_8c_add344ce0aa0b9e8437d848f5f7149789}} 
+\index{stephen\_game.c@{stephen\_game.c}!MAX\_ASTEROIDS@{MAX\_ASTEROIDS}}
+\index{MAX\_ASTEROIDS@{MAX\_ASTEROIDS}!stephen\_game.c@{stephen\_game.c}}
+\subsubsection{\texorpdfstring{MAX\_ASTEROIDS}{MAX\_ASTEROIDS}}
+{\footnotesize\ttfamily \#define M\+A\+X\+\_\+\+A\+S\+T\+E\+R\+O\+I\+DS~250}
+
+
+
+Definition at line 58 of file stephen\+\_\+game.\+c.
+
+\mbox{\Hypertarget{stephen__game_8c_a4873f264354797c1c04c34dff324c36b}\label{stephen__game_8c_a4873f264354797c1c04c34dff324c36b}} 
+\index{stephen\_game.c@{stephen\_game.c}!MAX\_ASTEROIDS\_PER\_COLUMN@{MAX\_ASTEROIDS\_PER\_COLUMN}}
+\index{MAX\_ASTEROIDS\_PER\_COLUMN@{MAX\_ASTEROIDS\_PER\_COLUMN}!stephen\_game.c@{stephen\_game.c}}
+\subsubsection{\texorpdfstring{MAX\_ASTEROIDS\_PER\_COLUMN}{MAX\_ASTEROIDS\_PER\_COLUMN}}
+{\footnotesize\ttfamily \#define M\+A\+X\+\_\+\+A\+S\+T\+E\+R\+O\+I\+D\+S\+\_\+\+P\+E\+R\+\_\+\+C\+O\+L\+U\+MN~\mbox{\hyperlink{stephen__game_8c_a529d5ebb449edf31d9835d13f4fb9f89}{M\+A\+P\+\_\+\+H\+E\+I\+G\+HT}}-\/2}
+
+
+
+Definition at line 59 of file stephen\+\_\+game.\+c.
+
+\mbox{\Hypertarget{stephen__game_8c_a2cc6f39fc4594f0e734b2588129fba03}\label{stephen__game_8c_a2cc6f39fc4594f0e734b2588129fba03}} 
+\index{stephen\_game.c@{stephen\_game.c}!MAX\_COLUMNS@{MAX\_COLUMNS}}
+\index{MAX\_COLUMNS@{MAX\_COLUMNS}!stephen\_game.c@{stephen\_game.c}}
+\subsubsection{\texorpdfstring{MAX\_COLUMNS}{MAX\_COLUMNS}}
+{\footnotesize\ttfamily \#define M\+A\+X\+\_\+\+C\+O\+L\+U\+M\+NS~\mbox{\hyperlink{stephen__game_8c_aa037a6d6a4f04d51c7ec1c9ee9054e76}{M\+A\+P\+\_\+\+W\+I\+D\+TH}}-\/2}
+
+
+
+Definition at line 60 of file stephen\+\_\+game.\+c.
+
+\mbox{\Hypertarget{stephen__game_8c_a81fabb4c9328f1dce788621d20c9c650}\label{stephen__game_8c_a81fabb4c9328f1dce788621d20c9c650}} 
+\index{stephen\_game.c@{stephen\_game.c}!MAX\_SHOTS@{MAX\_SHOTS}}
+\index{MAX\_SHOTS@{MAX\_SHOTS}!stephen\_game.c@{stephen\_game.c}}
+\subsubsection{\texorpdfstring{MAX\_SHOTS}{MAX\_SHOTS}}
+{\footnotesize\ttfamily \#define M\+A\+X\+\_\+\+S\+H\+O\+TS~5}
+
+
+
+Definition at line 64 of file stephen\+\_\+game.\+c.
+
+\mbox{\Hypertarget{stephen__game_8c_a0635ebdd108cf6b14b994ff2ad064558}\label{stephen__game_8c_a0635ebdd108cf6b14b994ff2ad064558}} 
+\index{stephen\_game.c@{stephen\_game.c}!RECHARGE\_RATE@{RECHARGE\_RATE}}
+\index{RECHARGE\_RATE@{RECHARGE\_RATE}!stephen\_game.c@{stephen\_game.c}}
+\subsubsection{\texorpdfstring{RECHARGE\_RATE}{RECHARGE\_RATE}}
+{\footnotesize\ttfamily \#define R\+E\+C\+H\+A\+R\+G\+E\+\_\+\+R\+A\+TE~750}
+
+
+
+Definition at line 63 of file stephen\+\_\+game.\+c.
+
+\mbox{\Hypertarget{stephen__game_8c_afc4d38e13c0a5f8430e74eac4cbded6e}\label{stephen__game_8c_afc4d38e13c0a5f8430e74eac4cbded6e}} 
+\index{stephen\_game.c@{stephen\_game.c}!STARTING\_DIFFICULTY@{STARTING\_DIFFICULTY}}
+\index{STARTING\_DIFFICULTY@{STARTING\_DIFFICULTY}!stephen\_game.c@{stephen\_game.c}}
+\subsubsection{\texorpdfstring{STARTING\_DIFFICULTY}{STARTING\_DIFFICULTY}}
+{\footnotesize\ttfamily \#define S\+T\+A\+R\+T\+I\+N\+G\+\_\+\+D\+I\+F\+F\+I\+C\+U\+L\+TY~24}
+
+
+
+Definition at line 67 of file stephen\+\_\+game.\+c.
+
+
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{stephen__game_8c_a2edb540b6a90674712e89ac914269338}\label{stephen__game_8c_a2edb540b6a90674712e89ac914269338}} 
+\index{stephen\_game.c@{stephen\_game.c}!StephenGame\_Init@{StephenGame\_Init}}
+\index{StephenGame\_Init@{StephenGame\_Init}!stephen\_game.c@{stephen\_game.c}}
+\subsubsection{\texorpdfstring{StephenGame\_Init()}{StephenGame\_Init()}}
+{\footnotesize\ttfamily void Stephen\+Game\+\_\+\+Init (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+Stephen\+Game\+\_\+\+Init must be called before the game can be played 
+
+Definition at line 118 of file stephen\+\_\+game.\+c.
+

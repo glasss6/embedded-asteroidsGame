@@ -1,8 +1,9 @@
-/*
- * stephen_game.h
- *
- *  Created on: Mar 16, 2019
- *      Author: sglas
+/**
+ * @{
+ * @file stephen_game.h
+ * @author Stephen Glass
+ * @date Mar 16 2019
+ * @brief Header file for asteroids game code
  */
 
 #ifndef STEPHEN_GAME_H_

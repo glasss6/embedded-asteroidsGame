@@ -1,12 +1,9 @@
 /**
- * main.c
- * Author: Stephen Glass
- * Description: Blink an LED using the task scheduler. Another LED blinks at a period proportional
- * to the result of a distance sensor connected to an ADC channel. Subsystem module is used for
- * logging and debugging.
+ * @file main.c
+ * @author Stephen Glass
+ * @date May 5 2019
+ * @brief Main file for asteroids game which initializes GPIO and modules
  *
- * Dependencies: embedded-software library
- * Board: MSP430F5529
  */
 
 #include <msp430.h> 
